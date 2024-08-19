@@ -32,3 +32,10 @@ class MemberAppView(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def getbooks(self, request, pk=None):
+        member = self.get_object()
+        books = Library.objects.filter(book_holder=member)
+        serializer = LibrarySerializer(books, many=True)
+        return Response(serializer.data)

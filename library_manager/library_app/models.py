@@ -12,6 +12,7 @@ class Library(models.Model):
     book_name = models.CharField(max_length=64)
     book_author = models.CharField(max_length=64)
     book_year = models.IntegerField()
+    #book_borrowed = models.BooleanField(default=False)
     book_holder = models.ForeignKey(Member, on_delete=models.CASCADE)
     book_return_date = models.DateField()
 
