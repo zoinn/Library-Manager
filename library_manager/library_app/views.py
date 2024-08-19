@@ -13,25 +13,9 @@ class LibraryAppView(viewsets.ModelViewSet):
     queryset = Library.objects.all()
     serializer_class = LibrarySerializer
 
-    @action(detail=False, methods=['post'])
-    def addbook(self, request):
-        serializer = LibrarySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 class MemberAppView(viewsets.ModelViewSet):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
-
-    @action (detail=False, methods=['post'])
-    def addmember(self, request):
-        serializer = MemberSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def getbooks(self, request, pk=None):
