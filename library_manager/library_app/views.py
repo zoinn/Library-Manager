@@ -5,17 +5,22 @@ from .serializers import LibrarySerializer, MemberSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.views.generic import ListView
 from rest_framework import status
 
 # Create your views here.
 
-class LibraryAppView(viewsets.ModelViewSet):
+class LibraryAppView(ListView):
     queryset = Library.objects.all()
     serializer_class = LibrarySerializer
+    template_name = 'library.html'
+    context_object_name = 'books'
 
-class MemberAppView(viewsets.ModelViewSet):
+class MemberAppView(ListView):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
+    template_name = 'members.html'
+    context_object_name = 'members'
 
     @action(detail=True, methods=['get'])
     def getbooks(self, request, pk=None):
