@@ -1,12 +1,13 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import redirect, render
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Library, Member
 from .serializers import LibrarySerializer, MemberSerializer
-from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 from django.views.generic import ListView
-from rest_framework import status
+from rest_framework.response import Response
+from django.views.generic import TemplateView
+
 
 # Create your views here.
 
@@ -28,3 +29,16 @@ class MemberAppView(ListView):
         books = Library.objects.filter(book_holder=member)
         serializer = LibrarySerializer(books, many=True)
         return Response(serializer.data)
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
+    def dispatch(self, request, *args, **kwargs):
+        auth = JWTAuthentication()
+        try:
+            auth.authenticate(request)
+        except AuthenticationFailed:
+            return render(request, 'login.html', {"error": "You need to log in."})
+        return super().dispatch(request, *args, **kwargs)
+
+def redirect_to_login(request):
+    return redirect('/login/')
