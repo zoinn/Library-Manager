@@ -12,4 +12,5 @@ A Django & Django Rest library manager that uses PostgreSQL as the model.
 - URL Patterns
 - Admin Panel and Registering
 - Migrations
-- Models with PostgreSQL 
+- Models with PostgreSQL
+- CBV (Class Based Views)
