@@ -1,3 +1,5 @@
+# Library Manager
+
 A Django & Django Rest library manager that uses PostgreSQL as the model.
 
 # What I learned and Improved on
